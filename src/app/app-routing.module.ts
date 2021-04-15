@@ -15,12 +15,12 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'progress', component: ProgressComponent },
-      { path: 'register', component: RegisterComponent },
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     ]
   },
 
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'graphic-one', component: GraphicOneComponent },
 
   { path: '**', component: NotfoundComponent },
