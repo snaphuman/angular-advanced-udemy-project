@@ -9,6 +9,9 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { HeaderComponent } from './shared/header/header.component';
+import { ProgressComponent } from './pages/progress/progress.component';
+import { GraphicOneComponent } from './pages/graphic-one/graphic-one.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -19,12 +22,14 @@ import { HeaderComponent } from './shared/header/header.component';
     DashboardComponent,
     BreadcrumbComponent,
     SidebarComponent,
-    HeaderComponent
+    HeaderComponent,
+    ProgressComponent,
+    GraphicOneComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
