@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MultiDataSet, Label, Color } from 'ng2-charts'
+import { DoughnutData } from '../../models/doughnut-data.model';
 
 @Component({
   selector: 'app-graphic-one',
@@ -7,14 +7,27 @@ import { MultiDataSet, Label, Color } from 'ng2-charts'
   styles: [
   ]
 })
+
 export class GraphicOneComponent {
 
-  doughnutChartLabels: Label[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
-  doughnutChartData: MultiDataSet = [
-    [350, 450, 100],
-  ];
+  chart1: DoughnutData = {
+    title: 'Sales',
+    labels: ['download sales', 'in-store sales', 'mail-order sales'],
+    chartData: [[350, 450, 100]] };
 
-  colors: Color[] = [
-    {backgroundColor: ['#6857E6', '#009FEE', '#F02059']}
-  ]
+  chart2: DoughnutData = {
+    title: 'Debts',
+    labels: ['lorem ipsum', 'Dolor sit amet', 'Consecutur'],
+    chartData: [[50, 650, 200]] };
+
+  chart3: DoughnutData = {
+    title: 'Profits',
+    labels: ['download sales', 'in-store sales', 'mail-order sales'],
+    chartData: [[550, 250, 50]] };
+
+  chart4: DoughnutData = {
+    title: 'Payments',
+    labels: ['download sales', 'in-store sales', 'mail-order sales'],
+    chartData: [[450, 50, 450]] };
+
 }
