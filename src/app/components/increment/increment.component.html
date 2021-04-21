@@ -7,6 +7,8 @@
          max="100"
          class="form-control"
          placeholder="Product name"
+         [ngClass] = "{'is-invalid': isInvalid() }"
+         (ngModelChange)="onChange($event)"
          [(ngModel)]="progress">
   <span class="input-group-btn">
     <button [ngClass]="btnClass" type="button" (click)="changeValue(1)"><i class="fa fa-plus"></i></button>
