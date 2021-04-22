@@ -11,6 +11,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountSettingsComponent implements OnInit {
 
+  element = document.querySelector('#theme');
+
   constructor() { }
 
   ngOnInit(): void {
@@ -18,9 +20,9 @@ export class AccountSettingsComponent implements OnInit {
 
   changeTheme( theme: string ) {
 
-    const element = document.querySelector('#theme');
     const url = `./assets/css/colors/${ theme }.css`;
 
-    element.setAttribute('href', url);
+    this.element.setAttribute('href', url);
+    localStorage.setItem('theme', url);
   }
 }
