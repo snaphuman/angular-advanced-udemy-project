@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ActivationEnd, Router } from '@angular/router';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -6,11 +8,24 @@ import { Component, OnInit } from '@angular/core';
   styles: [
   ]
 })
-export class BreadcrumbComponent implements OnInit {
+export class BreadcrumbComponent {
 
-  constructor() { }
+  title: string;
 
-  ngOnInit(): void {
+  constructor( private router: Router) {
+
+    this.router.events
+      .pipe(
+        filter(event => event instanceof ActivationEnd),
+        filter((event: ActivationEnd) => event.snapshot.firstChild === null),
+        map((event: ActivationEnd) => event.snapshot.data)
+      )
+
+      .subscribe( ({ title })  => {
+        this.title = title;
+        document.title = title
+      })
   }
+
 
 }
