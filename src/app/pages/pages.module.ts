@@ -12,6 +12,7 @@ import { GraphicOneComponent } from './graphic-one/graphic-one.component';
 import { PagesComponent } from './pages.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { PromisesComponent } from './promises/promises.component';
+import { RxjsComponent } from './rxjs/rxjs.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { PromisesComponent } from './promises/promises.component';
     GraphicOneComponent,
     PagesComponent,
     AccountSettingsComponent,
-    PromisesComponent
+    PromisesComponent,
+    RxjsComponent
   ],
   exports: [
     DashboardComponent,
