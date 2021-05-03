@@ -6,3 +6,12 @@ export interface RegisterForm {
   password2: string;
   terms: boolean;
 }
+
+export interface RegisterFormBackend {
+  nombre: string;
+  email: string;
+  password: string;
+  password2: string;
+  terminos: boolean;
+}
+
