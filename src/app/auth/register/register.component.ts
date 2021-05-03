@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -11,11 +11,14 @@ export class RegisterComponent {
   formSubmitted: boolean = false;
 
   registerForm = this.fb.group({
-    name: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required],
-    password2: ['', Validators.required],
-    terms: [false, Validators.required]
+    name: ['Foo', Validators.required],
+    email: ['foo@bar.com', [Validators.required, Validators.email]],
+    password: ['123', Validators.required],
+    password2: ['1234', Validators.required],
+    terms: [true, Validators.required]
+  }, {
+    validators: this.passwordsMatch('password', 'password2')
+
   });
 
   constructor( private fb: FormBuilder ) { }
@@ -44,5 +47,20 @@ export class RegisterComponent {
   termsAccepted() {
 
     return !this.registerForm.get('terms').value && this.formSubmitted;
+  }
+
+  passwordsMatch(password: string, password2: string) {
+
+    return ( formGroup: FormGroup ) => {
+
+      const passControl = formGroup.get(password);
+      const pass2Control = formGroup.get(password2);
+
+      if (passControl.value === pass2Control.value) {
+        pass2Control.setErrors(null)
+      } else {
+        pass2Control.setErrors({ notEqual: true });
+      }
+    }
   }
 }
