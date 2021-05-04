@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { RegisterComponent } from '../auth/register/register.component';
+import { LoginForm } from '../interfaces/login-form.interface';
 import { RegisterForm, RegisterFormBackend } from '../interfaces/register-form.interface';
 
 const base_url = environment.base_url;
@@ -18,7 +19,12 @@ export class UserService {
     return this.http.post(`${ base_url }/usuarios`, this.fixDataToSend(formData));
   }
 
-  fixDataToSend( formData: RegisterForm ) : RegisterFormBackend {
+  login( formData: LoginForm ) {
+
+    return this.http.post(`${ base_url }/login`, formData);
+  }
+
+  private fixDataToSend( formData: RegisterForm ) : RegisterFormBackend {
 
      const form: RegisterFormBackend = {
      nombre: formData.name,
