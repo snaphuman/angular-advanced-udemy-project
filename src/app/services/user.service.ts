@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -7,13 +8,42 @@ import { LoginForm } from '../interfaces/login-form.interface';
 import { RegisterForm, RegisterFormBackend } from '../interfaces/register-form.interface';
 
 const base_url = environment.base_url;
+declare const gapi: any;
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor( private http: HttpClient) { }
+  auth2: any;
+
+  constructor( private http: HttpClient,
+               private router: Router,
+               private ngZone: NgZone ) {
+
+    this.googleInit();
+  }
+
+  googleInit() {
+    gapi.load('auth2', () => {
+      this.auth2 = gapi.auth2.init({
+        client_id: '990401532765-35m766eonki518tvat8pc070ke6p99lt.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin',
+      });
+    });
+  };
+
+  logout () {
+
+    localStorage.removeItem('token');
+    this.auth2 = gapi.auth2.getAuthInstance();
+    this.auth2.signOut().then(() => {
+      this.ngZone.run(() => {
+        this.router.navigateByUrl('/login');
+      })
+    });
+
+  }
 
   validateToken(): Observable<boolean> {
 

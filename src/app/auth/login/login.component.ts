@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
+    private router: Router,
+    private ngZone: NgZone,
     ) { }
 
   ngOnInit(): void {
@@ -40,6 +42,8 @@ export class LoginComponent implements OnInit {
       } else {
         localStorage.removeItem('email');
       }
+
+      this.router.navigateByUrl('/');
     }, (err) => {
       Swal.fire('Error', err.error.msg, 'error');
     })
@@ -80,7 +84,13 @@ export class LoginComponent implements OnInit {
     this.auth2.attachClickHandler(element, {},
         (googleUser) => {
           const id_token = googleUser.getAuthResponse().id_token;
-          this.userService.loginGoogle(id_token).subscribe()
+          this.userService.loginGoogle(id_token).subscribe( (res) => {
+
+            this.ngZone.run(() => {
+              this.router.navigateByUrl('/');
+            });
+          });
+
         }, (error) => {
           alert(JSON.stringify(error, undefined, 2));
         });
