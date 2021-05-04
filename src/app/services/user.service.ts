@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { RegisterComponent } from '../auth/register/register.component';
 import { LoginForm } from '../interfaces/login-form.interface';
 import { RegisterForm, RegisterFormBackend } from '../interfaces/register-form.interface';
 
@@ -16,12 +16,35 @@ export class UserService {
 
   createUser( formData: RegisterForm ) {
     console.log('creating user');
-    return this.http.post(`${ base_url }/usuarios`, this.fixDataToSend(formData));
+    return this.http.post(`${ base_url }/usuarios`, this.fixDataToSend(formData))
+                .pipe(
+                  tap( (res: any) => {
+                    console.log(res.token)
+                    localStorage.setItem('token', res.token)
+                  })
+                );
   }
 
   login( formData: LoginForm ) {
 
-    return this.http.post(`${ base_url }/login`, formData);
+    return this.http.post(`${ base_url }/login`, formData)
+                .pipe(
+                  tap( (res: any) => {
+                    console.log(res.token)
+                    localStorage.setItem('token', res.token)
+                  })
+                );
+  }
+
+  loginGoogle( token ) {
+    console.log('token',token);
+
+    return this.http.post(`${ base_url }/login/google`, {'token':token})
+                .pipe(
+                  tap( (res: any) => {
+                    localStorage.setItem('token', res.token)
+                  })
+                );
   }
 
   private fixDataToSend( formData: RegisterForm ) : RegisterFormBackend {
