@@ -10,9 +10,13 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class HeaderComponent implements OnInit {
 
+  imgUrl: string = ''
+
   constructor(
     private userService: UserService,
-    private router: Router ) { }
+    private router: Router ) {
+      this.imgUrl = userService.user.imageUrl;
+    }
 
   ngOnInit(): void {
   }
