@@ -68,7 +68,7 @@ export class UserService {
           nombre,
           role,
           img,
-          uid } = res.user;
+          uid } = res.usuario;
 
         this.user = new User (nombre, email, '', google, img, role, uid);
 
@@ -84,7 +84,6 @@ export class UserService {
     return this.http.post(`${ base_url }/usuarios`, this.fixDataToSend(formData))
                 .pipe(
                   tap( (res: any) => {
-                    console.log(res.token)
                     localStorage.setItem('token', res.token)
                   })
                 );
@@ -95,7 +94,6 @@ export class UserService {
     return this.http.post(`${ base_url }/login`, formData)
                 .pipe(
                   tap( (res: any) => {
-                    console.log(res.token)
                     localStorage.setItem('token', res.token)
                   })
                 );
