@@ -25,12 +25,16 @@ export class UserService {
   }
 
   googleInit() {
-    gapi.load('auth2', () => {
-      this.auth2 = gapi.auth2.init({
-        client_id: '990401532765-35m766eonki518tvat8pc070ke6p99lt.apps.googleusercontent.com',
-        cookiepolicy: 'single_host_origin',
+
+    return new Promise<void>( resolve => {
+      gapi.load('auth2', () => {
+        this.auth2 = gapi.auth2.init({
+          client_id: '990401532765-35m766eonki518tvat8pc070ke6p99lt.apps.googleusercontent.com',
+          cookiepolicy: 'single_host_origin',
+        });
+        resolve();
       });
-    });
+    })
   };
 
   logout () {
