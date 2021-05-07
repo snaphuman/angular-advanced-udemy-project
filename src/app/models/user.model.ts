@@ -14,6 +14,10 @@ export class User {
 
   get imageUrl() {
 
+    if ( this.img.includes('google')) {
+      return this.img;
+    }
+
     if ( this.img ) {
 
       return `${base_url}/upload/usuarios/${this.img}`;

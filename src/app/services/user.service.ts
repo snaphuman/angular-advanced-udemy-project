@@ -60,21 +60,21 @@ export class UserService {
         'x-token': token
       }
     }).pipe(
-      tap( (res:any) => {
+      map( (res:any) => {
 
         const {
           email,
           google,
           nombre,
           role,
-          img,
+          img = '',
           uid } = res.usuario;
 
         this.user = new User (nombre, email, '', google, img, role, uid);
-
         localStorage.setItem('token', res.token);
+
+        return true;
       }),
-      map( (res:any) => true ),
       catchError( error => of (false) )
     );
   }
