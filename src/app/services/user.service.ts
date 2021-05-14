@@ -26,6 +26,10 @@ export class UserService {
     this.googleInit();
   }
 
+  get token(): string {
+    return localStorage.getItem('token') || '';
+  }
+
   googleInit() {
 
     return new Promise<void>( resolve => {
@@ -53,11 +57,9 @@ export class UserService {
 
   validateToken(): Observable<boolean> {
 
-    const token = localStorage.getItem('token') || '';
-
     return this.http.get(`${ base_url }/login/renew`, {
       headers: {
-        'x-token': token
+        'x-token': this.token
       }
     }).pipe(
       map( (res:any) => {
@@ -87,6 +89,20 @@ export class UserService {
                     localStorage.setItem('token', res.token)
                   })
                 );
+  }
+
+  updateProfile( data: {email: string, nombre: string, role: string}) {
+
+    data = {
+      ...data,
+      role: this.user.role,
+    }
+
+    return this.http.put(`${ base_url }/usuarios/${ this.user.uid }`, data, {
+                headers: {
+                  'x-token': this.token
+                }
+               });
   }
 
   login( formData: LoginForm ) {
