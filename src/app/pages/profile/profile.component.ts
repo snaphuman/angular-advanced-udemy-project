@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
   user: User;
   selectedImage: File;
+  imgPreview: string | ArrayBuffer = null;
 
   constructor(
     private fb: FormBuilder,
@@ -44,8 +45,18 @@ export class ProfileComponent implements OnInit {
   }
 
   selectImage( file: File ) {
-    console.log(file)
     this.selectedImage = file;
+
+    if (!file) {
+      return this.imgPreview = null
+    };
+
+    const reader = new FileReader();
+    reader.readAsDataURL( file );
+
+    reader.onloadend = () => {
+      this.imgPreview = reader.result;
+    }
   }
 
   uploadImage() {
@@ -53,7 +64,7 @@ export class ProfileComponent implements OnInit {
       this.selectedImage,
       'usuarios',
       this.user.uid
-    ).then( img => console.log(img));
+    ).then( img => this.user.img = img);
 
   }
 }
