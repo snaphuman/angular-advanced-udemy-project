@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpEventType, HttpHeaders } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { LoginForm } from '../interfaces/login-form.interface';
 import { RegisterForm, RegisterFormBackend } from '../interfaces/register-form.interface';
+import { ShowUsers } from '../interfaces/show-users.interface';
 import { User } from '../models/user.model';
 
 const base_url = environment.base_url;
@@ -28,7 +29,15 @@ export class UserService {
 
   get token(): string {
     return localStorage.getItem('token') || '';
-  }
+  };
+
+  get headers(): any {
+    return  {
+            headers: {
+              'x-token': this.token
+            }
+          };
+  };
 
   googleInit() {
 
@@ -98,11 +107,7 @@ export class UserService {
       role: this.user.role,
     }
 
-    return this.http.put(`${ base_url }/usuarios/${ this.user.uid }`, data, {
-                headers: {
-                  'x-token': this.token
-                }
-               });
+    return this.http.put(`${ base_url }/usuarios/${ this.user.uid }`, data, this.headers );
   }
 
   login( formData: LoginForm ) {
@@ -124,6 +129,12 @@ export class UserService {
                     localStorage.setItem('token', res.token)
                   })
                 );
+  }
+
+  showUsers( from: number = 0 ) {
+
+    const url = `${ base_url }/usuarios?desde=${ from }`;
+    return this.http.get<ShowUsers>( url, this.headers );
   }
 
   private fixDataToSend( formData: RegisterForm ) : RegisterFormBackend {
