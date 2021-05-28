@@ -5,6 +5,7 @@ import { ShowUsers } from 'src/app/interfaces/show-users.interface';
 import { User } from 'src/app/models/user.model';
 import { SearchService } from 'src/app/services/search.service';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-users',
@@ -56,6 +57,44 @@ export class UsersComponent implements OnInit {
 
           this.users = res
         })
+  }
+
+  deleteUser( user: User ) {
+
+    if (user.uid === this.userService.uid) {
+
+      return Swal.fire('Error', 'Logged in user cannot be deleted', 'error');
+    }
+
+    Swal.fire({
+      title: '¿Delete User?',
+      text: `You are going to delete ${ user.nombre }`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.userService.deleteUser(user)
+            .subscribe( res => {
+              Swal
+              .fire(
+                'User deleted',
+                `${user.nombre} was deleted`,
+                'success');
+              this.showUsers();
+          })
+      }
+    })
+  }
+
+  updateRole( user: User ) {
+    this.userService.saveUser(user).subscribe( res => {
+
+      console.log(res)
+    })
+
   }
 
 }

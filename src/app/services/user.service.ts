@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 import { LoginForm } from '../interfaces/login-form.interface';
 import { RegisterForm, RegisterFormBackend } from '../interfaces/register-form.interface';
 import { ShowUsers } from '../interfaces/show-users.interface';
@@ -25,6 +26,10 @@ export class UserService {
                private ngZone: NgZone ) {
 
     this.googleInit();
+  }
+
+  get uid(): string {
+    return this.user.uid || '';
   }
 
   get token(): string {
@@ -129,6 +134,18 @@ export class UserService {
                     localStorage.setItem('token', res.token)
                   })
                 );
+  }
+
+  saveUser( user: User ) {
+
+    return this.http.put(`${ base_url }/usuarios/${ user.uid }`, user, this.headers );
+  }
+
+
+  deleteUser( user: User ) {
+
+    const url = `${ base_url }/usuarios/${ user.uid }`;
+    return this.http.delete( url, this.headers )
   }
 
   showUsers( from: number = 0 ) {
