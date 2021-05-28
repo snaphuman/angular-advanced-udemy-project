@@ -6,11 +6,10 @@ import { ChartsModule } from 'ng2-charts';
 
 import { IncrementComponent } from './increment/increment.component';
 import { DoughnutComponent } from './doughnut/doughnut.component';
-
-
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
-  declarations: [IncrementComponent, DoughnutComponent],
+  declarations: [IncrementComponent, DoughnutComponent, ModalComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -18,7 +17,8 @@ import { DoughnutComponent } from './doughnut/doughnut.component';
   ],
   exports: [
     IncrementComponent,
-    DoughnutComponent
+    DoughnutComponent,
+    ModalComponent
   ]
 })
 export class ComponentsModule { }
