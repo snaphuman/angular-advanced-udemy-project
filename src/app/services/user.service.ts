@@ -134,7 +134,26 @@ export class UserService {
   showUsers( from: number = 0 ) {
 
     const url = `${ base_url }/usuarios?desde=${ from }`;
-    return this.http.get<ShowUsers>( url, this.headers );
+    return this.http.get<ShowUsers>( url, this.headers )
+           .pipe(
+             map( (res: any) => {
+              const users = res.usuarios.map(
+                user => new User(
+                  user.nombre,
+                  user.email,
+                  '',
+                  user.google,
+                  user.img,
+                  user.role,
+                  user.uid)
+                );
+
+              return {
+                total: res.total,
+                usuarios: users
+              };
+             })
+           );
   }
 
   private fixDataToSend( formData: RegisterForm ) : RegisterFormBackend {
