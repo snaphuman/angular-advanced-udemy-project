@@ -15,15 +15,31 @@ export class UsersComponent implements OnInit {
 
   totalUsers: number = 0;
   users: User[] = [];
+  from: number = 0;
 
   constructor( private userService: UserService ) { }
 
   ngOnInit(): void {
-    this.userService.showUsers(0)
+    this.showUsers();
+
+  }
+
+  showUsers() {
+    this.userService.showUsers( this.from )
       .subscribe(({ total, usuarios }: any)  => {
         this.totalUsers = total;
         this.users = usuarios;
     })
+  }
+
+  changePage( value: number ) {
+    this.from += value
+
+    if ( this.from < 0 ) this.from = 0;
+
+    if ( this.from >= this.totalUsers ) this.from -= value;
+
+    this.showUsers();
   }
 
 }
