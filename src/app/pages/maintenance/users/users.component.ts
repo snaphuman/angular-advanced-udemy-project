@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ShowUsers } from 'src/app/interfaces/show-users.interface';
 import { User } from 'src/app/models/user.model';
+import { SearchService } from 'src/app/services/search.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class UsersComponent implements OnInit {
   from: number = 0;
   loading: boolean = true;
 
-  constructor( private userService: UserService ) { }
+  constructor( private userService: UserService,
+               private searchService: SearchService ) { }
 
   ngOnInit(): void {
     this.showUsers();
@@ -43,6 +45,17 @@ export class UsersComponent implements OnInit {
     if ( this.from >= this.totalUsers ) this.from -= value;
 
     this.showUsers();
+  }
+
+  search( term: string ) {
+    if (!term) return;
+
+    this.searchService.search('usuarios', term)
+        .subscribe(res => {
+          console.log(res);
+
+          this.users = res
+        })
   }
 
 }

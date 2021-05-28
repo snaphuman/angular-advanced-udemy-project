@@ -5,7 +5,9 @@
 
         <input type="text"
         class="form-control"
-        placeholder="Search user">
+        placeholder="Search user"
+        (keyup)="search(txtTerm.value)"
+        #txtTerm>
       </div>
     </div>
   </div>
@@ -60,8 +62,12 @@
             </tbody>
           </table>
         </div>
-        <button (click)="changePage(-5)" class="btn btn-secondary">Previous</button>
-        <button (click)="changePage(5)" class="btn btn-secondary">Next</button>
+        <button (click)="changePage(-5)"
+                class="btn btn-secondary"
+                >Previous</button>
+        <button (click)="changePage(5)"
+                class="btn btn-secondary"
+                >Next</button>
       </div>
     </div>
   </div>
