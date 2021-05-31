@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import Swal from 'sweetalert2';
 import { LoginForm } from '../interfaces/login-form.interface';
 import { RegisterForm, RegisterFormBackend } from '../interfaces/register-form.interface';
 import { ShowUsers } from '../interfaces/show-users.interface';
