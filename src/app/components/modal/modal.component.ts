@@ -9,13 +9,33 @@ import { ModalService } from 'src/app/services/modal.service';
 })
 export class ModalComponent implements OnInit {
 
+  selectedImage: File;
+  imgPreview: string | ArrayBuffer = null;
+
   constructor( public modalService: ModalService ) { }
 
   ngOnInit(): void {
   }
 
   closeModal() {
+    this.imgPreview = null;
     this.modalService.closeModal();
   }
+
+  selectImage( file: File ) {
+    this.selectedImage = file;
+
+    if (!file) {
+      return this.imgPreview = null
+    };
+
+    const reader = new FileReader();
+    reader.readAsDataURL( file );
+
+    reader.onloadend = () => {
+      this.imgPreview = reader.result;
+    }
+  }
+
 
 }

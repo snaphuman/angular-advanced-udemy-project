@@ -17,7 +17,13 @@
         </button>
       </div>
       <div class="modal-body">
-        Something
+
+        <h3>Select image</h3>
+        <img *ngIf="!imgPreview" class="img-fluid" [src]="modalService.img">
+        <img *ngIf="imgPreview" class="img-fluid" [src]="imgPreview">
+
+        <input type="file"
+                (change)="selectImage($event.target.files[0])">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
