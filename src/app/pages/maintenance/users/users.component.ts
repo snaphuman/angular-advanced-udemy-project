@@ -1,8 +1,6 @@
-import { HttpEvent } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ShowUsers } from 'src/app/interfaces/show-users.interface';
 import { User } from 'src/app/models/user.model';
+import { ModalService } from 'src/app/services/modal.service';
 import { SearchService } from 'src/app/services/search.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
@@ -21,7 +19,8 @@ export class UsersComponent implements OnInit {
   loading: boolean = true;
 
   constructor( private userService: UserService,
-               private searchService: SearchService ) { }
+               private searchService: SearchService,
+               private modalService: ModalService ) { }
 
   ngOnInit(): void {
     this.showUsers();
@@ -95,6 +94,10 @@ export class UsersComponent implements OnInit {
       console.log(res)
     })
 
+  }
+
+  openModal( user: User )  {
+    this.modalService.openModal();
   }
 
 }
