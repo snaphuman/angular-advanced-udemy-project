@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 const base_url = environment.base_url;
@@ -9,9 +10,10 @@ const base_url = environment.base_url;
 export class ModalService {
 
   private _hideModal: boolean = true;
-  type: string;
+  type: 'hospitales' | 'medicos' | 'usuarios';
   id: string;
   img: string;
+  refreshImage: EventEmitter<string> = new EventEmitter<string>();
 
   get hideModal() {
     return this._hideModal;

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { User } from 'src/app/models/user.model';
 import { ModalService } from 'src/app/services/modal.service';
 import { SearchService } from 'src/app/services/search.service';
@@ -11,20 +13,30 @@ import Swal from 'sweetalert2';
   styles: [
   ]
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
 
   totalUsers: number = 0;
   users: User[] = [];
   from: number = 0;
   loading: boolean = true;
+  modalSubscription: Subscription;
 
   constructor( private userService: UserService,
                private searchService: SearchService,
-               private modalService: ModalService ) { }
+               private modalService: ModalService )
+               { }
+
+  ngOnDestroy(): void {
+    this.modalSubscription.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.showUsers();
-
+    this.modalSubscription = this.modalService.refreshImage
+        .pipe(
+          delay(100)
+        )
+        .subscribe( data => this.showUsers() )
   }
 
   showUsers() {
