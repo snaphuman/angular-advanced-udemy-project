@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { User } from 'src/app/models/user.model';
 import { ModalService } from 'src/app/services/modal.service';
@@ -59,11 +59,11 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.showUsers();
   }
 
-  search( term: string ) {
+  search( term: string ): Observable<User[]> {
     if (!term) return;
 
     this.searchService.search('usuarios', term)
-        .subscribe(res => {
+        .subscribe((res: User[]) => {
           console.log(res);
 
           this.users = res

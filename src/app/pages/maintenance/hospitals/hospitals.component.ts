@@ -3,6 +3,7 @@ import { delay } from 'rxjs/operators';
 import { Hospital } from 'src/app/models/hospital-model';
 import { HospitalService } from 'src/app/services/hospital.service';
 import { ModalService } from 'src/app/services/modal.service';
+import { SearchService } from 'src/app/services/search.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -18,7 +19,8 @@ export class HospitalsComponent implements OnInit {
   imgPreview: any = null;
 
   constructor( private hospitalService: HospitalService,
-               private modalService: ModalService ) { }
+               private modalService: ModalService,
+               private searchService: SearchService ) { }
 
   ngOnInit(): void {
     this.showHospitals();
@@ -85,5 +87,16 @@ export class HospitalsComponent implements OnInit {
 
   openModal( hospital: Hospital ) {
     this.modalService.openModal('hospitales', hospital._id, hospital.img )
+  }
+
+  search( term: string ) {
+    if (!term) return;
+
+    this.searchService.search('hospitales', term)
+        .subscribe(res => {
+          console.log(res);
+
+          this.hospitals = res
+        })
   }
 }
