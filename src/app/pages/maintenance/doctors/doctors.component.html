@@ -12,7 +12,7 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row" *ngIf="loading">
   <div class="col-12">
     <div class="alert alert-info text-center" role="alert">
       <h4 class="alert-heading">Loading</h4>
@@ -27,7 +27,7 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Registered Doctors</h4>
-        <h6 class="card-subtitle">Total Doctors </h6>
+        <h6 class="card-subtitle">Total Doctors ({{ doctors.length }})</h6>
         <div class="text-right">
           <button class="mb-2 btn btn-primary"><i class="fa fa-plus pr-2"></i>New Doctor</button>
         </div>
@@ -43,15 +43,17 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr *ngFor="let doctor of doctors">
                 <td class="text-center">
+                  <img [src]="doctor.img | image:'medicos'"
+                       [alt]="doctor.nombre"
+                       (click)="openModal(doctor)"
+                       class="avatar"
+                       />
                 </td>
-              <td>
-                  <input type="text"
-                         class="form-control"
-                         placeholder="Enter Doctor name"
-                  />
-              </td>
+                <td>
+                  {{ doctor.nombre }}
+                </td>
                 <td class="text-nowrap text-center">
                   <a
                      data-toggle="tooltip"
