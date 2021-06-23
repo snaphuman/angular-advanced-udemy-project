@@ -34,6 +34,7 @@ const routes: Routes = [
       { path: 'users', component: UsersComponent, data: { title: "Application users"} },
       { path: 'doctors', component: DoctorsComponent, data: { title: "Application Doctors"} },
       { path: 'doctor/:id', component: DoctorDetailComponent, data: { title: "Doctor detail"} },
+      { path: 'doctors/new', component: DoctorDetailComponent, data: { title: "Doctor detail"} },
       { path: 'hospitals', component: HospitalsComponent, data: { title: "Application Hospitals"} },
     ]
   },

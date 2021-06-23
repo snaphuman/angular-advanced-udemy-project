@@ -29,7 +29,7 @@
         <h4 class="card-title">Registered Doctors</h4>
         <h6 class="card-subtitle">Total Doctors ({{ doctors.length }})</h6>
         <div class="text-right">
-          <button class="mb-2 btn btn-primary"><i class="fa fa-plus pr-2"></i>New Doctor</button>
+          <button [routerLink]="['/dashboard/doctors/new']" routerLinkActive="router-link-active"  class="mb-2 btn btn-primary"><i class="fa fa-plus pr-2"></i>New Doctor</button>
         </div>
         <div class="table-responsive">
           <table class="table table-bordered">

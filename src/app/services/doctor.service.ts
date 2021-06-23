@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Doctor } from '../models/doctor.model';
@@ -33,7 +33,7 @@ export class DoctorService {
                )
   }
 
-  createDoctor(doctor: Doctor) {
+  createDoctor(doctor: { nombre: string, hospita: string } ) {
 
     const url = `${ base_url }/medicos`;
     return this.http.post( url, doctor, this.headers)

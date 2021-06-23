@@ -18,7 +18,7 @@ export class DoctorsComponent implements OnInit {
               private modalService: ModalService) { }
 
   ngOnInit(): void {
-    this.showDoctors;
+    this.showDoctors();
   }
 
   showDoctors() {
@@ -28,6 +28,7 @@ export class DoctorsComponent implements OnInit {
     this.doctorService.showDoctors()
         .subscribe( res => {
           console.log(res);
+          this.doctors = res
           this.loading = false;
         })
   }
