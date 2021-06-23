@@ -4,6 +4,7 @@ import { Doctor } from 'src/app/models/doctor.model';
 import { DoctorService } from 'src/app/services/doctor.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { SearchService } from 'src/app/services/search.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-doctors',
@@ -43,6 +44,31 @@ export class DoctorsComponent implements OnInit, OnDestroy {
           this.doctors = res
           this.loading = false;
         })
+  }
+
+  delete ( doctor: Doctor ) {
+
+    Swal.fire({
+      title: '¿Delete Doctor?',
+      text: `You are going to delete ${ doctor.nombre }`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.doctorService.deleteDoctor(doctor._id)
+            .subscribe( res => {
+              Swal
+              .fire(
+                'Doctor deleted',
+                `${doctor.nombre} was deleted`,
+                'success');
+              this.showDoctors();
+          })
+      }
+    })
   }
 
   openModal( doctor: Doctor ) {

@@ -70,7 +70,7 @@
                      data-toggle="tooltip"
                      class="cursor"
                      data-original-title="Delete"
-                     [routerLink]="['doctor', doctor._id]"
+                     (click)="delete( doctor )"
                      >
                      <i class="fa fa-close text-danger">
 
