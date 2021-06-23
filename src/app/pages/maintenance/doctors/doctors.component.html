@@ -6,7 +6,8 @@
         <input type="text"
         class="form-control"
         placeholder="Search Doctor"
-        #txtTerm>
+        #txtTerm
+        (keyup)="search(txtTerm.value)">
       </div>
     </div>
   </div>
@@ -69,6 +70,7 @@
                      data-toggle="tooltip"
                      class="cursor"
                      data-original-title="Delete"
+                     [routerLink]="['doctor', doctor._id]"
                      >
                      <i class="fa fa-close text-danger">
 

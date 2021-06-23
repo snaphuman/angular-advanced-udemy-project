@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Doctor } from '../models/doctor.model';
 import { Hospital } from '../models/hospital-model';
 import { User } from '../models/user.model';
 
@@ -30,7 +31,7 @@ export class SearchService {
           term: string )  {
 
     const url = `${ base_url }/todo/coleccion/${ type }/${ term }`;
-    return this.http.get<User[]|Hospital[]>( url, this.headers )
+    return this.http.get<User[]|Hospital[]|Doctor[]>( url, this.headers )
            .pipe(
              map( (res: any) => {
 
@@ -38,10 +39,9 @@ export class SearchService {
                 case 'usuarios':
                   return this.transformUsers(res.resultados);
                 case 'medicos':
-                  return [];
+                  return this.transformDoctors(res.resultados);
                 case 'hospitales':
                   return this.transformHospitals(res.resultados);
-                  break;
                 default:
                   return [];
               }
@@ -64,6 +64,11 @@ export class SearchService {
   }
 
   private transformHospitals( results: any[] ): Hospital[] {
+
+    return results;
+  }
+
+  private transformDoctors( results: any[] ): Doctor[] {
 
     return results;
   }

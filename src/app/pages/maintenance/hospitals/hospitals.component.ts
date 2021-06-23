@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { delay } from 'rxjs/operators';
 import { Hospital } from 'src/app/models/hospital-model';
 import { HospitalService } from 'src/app/services/hospital.service';
@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
   styles: [
   ]
 })
-export class HospitalsComponent implements OnInit {
+export class HospitalsComponent implements OnInit, OnDestroy {
 
   hospitals: Hospital[] = [];
   loading: boolean = true;
@@ -28,6 +28,11 @@ export class HospitalsComponent implements OnInit {
                           .pipe(
                             delay(1000))
                           .subscribe( img => this.showHospitals())
+  }
+
+  ngOnDestroy(): void {
+
+    this.imgPreview.unsubscribe();
   }
 
   showHospitals() {
@@ -93,7 +98,7 @@ export class HospitalsComponent implements OnInit {
     if (!term) return;
 
     this.searchService.search('hospitales', term)
-        .subscribe(res => {
+        .subscribe((res: Hospital[]) => {
           console.log(res);
 
           this.hospitals = res
