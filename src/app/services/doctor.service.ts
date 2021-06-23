@@ -52,4 +52,14 @@ export class DoctorService {
     return this.http.delete( url, this.headers)
   }
 
+  getDoctor( id: string ) {
+
+    const url = `${ base_url }/medicos/${ id }`;
+    return this.http.get<Doctor[]>( url, this.headers )
+               .pipe(
+                 map( (res: any) => res.medico )
+               )
+
+  }
+
 }
