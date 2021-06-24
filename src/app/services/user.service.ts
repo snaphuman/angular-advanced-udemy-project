@@ -43,6 +43,10 @@ export class UserService {
           };
   };
 
+  get role(): 'ADMIN_ROLE' | 'USER_ROLE' {
+    return this.user.role;
+  }
+
   googleInit() {
 
     return new Promise<void>( resolve => {
