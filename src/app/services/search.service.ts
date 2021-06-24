@@ -27,6 +27,12 @@ export class SearchService {
           };
   };
 
+  globalSearch( term: string ) {
+
+    const url = `${ base_url }/todo/${ term }`;
+    return this.http.get<User[]|Hospital[]|Doctor[]>( url, this.headers )
+  }
+
   search( type: 'usuarios' | 'medicos' | 'hospitales',
           term: string )  {
 
